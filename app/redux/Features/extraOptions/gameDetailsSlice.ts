@@ -1,0 +1,190 @@
+"use client";
+
+import { rnkDet } from "@/app/components/types/Types";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+
+export type op = {
+  optionName: string;
+};
+
+export type op2 = {
+  optionName: string;
+  optionValue: string;
+};
+
+type rnk = {
+  currentRank: rnkDet | undefined;
+  desiredRank: rnkDet | undefined;
+};
+
+type rnkw = {
+  currentRank: rnkDet | undefined;
+  wins: number | undefined;
+};
+
+export type ExtraOptionsState = {
+  gameDetails: {
+    gameName: string;
+    gameOptions?: op[];
+    gameOptions2?: op2[];
+    gameRanks?: rnk;
+    gameRankWins?: rnkw;
+    gameUnrankedWins?: number | undefined;
+  }[];
+};
+
+const initialState = {
+  gameDetails: [],
+} satisfies ExtraOptionsState as ExtraOptionsState;
+
+export const gameDetailsSlice = createSlice({
+  name: "gameDetails",
+  initialState,
+  reducers: {
+    gameDefiendCheck: (state, action: PayloadAction<string>) => {
+      let isIn = false;
+      state.gameDetails.map((item) => {
+        if (item.gameName === action.payload) {
+          isIn = true;
+        }
+      });
+      if (!isIn) {
+        state.gameDetails = [
+          ...state.gameDetails,
+          {
+            gameName: action.payload,
+            gameOptions: [],
+            gameOptions2: [],
+            gameRanks: { currentRank: undefined, desiredRank: undefined },
+            gameRankWins: { currentRank: undefined, wins: undefined },
+            gameUnrankedWins: undefined,
+          },
+        ];
+      }
+    },
+    extraOptionAdded: (
+      state,
+      action: PayloadAction<{ game: string; optionName: string }>
+    ) => {
+      gameDetailsSlice.caseReducers.gameDefiendCheck(state, {
+        payload: action.payload.game,
+        type: action.type,
+      });
+      state.gameDetails = state.gameDetails.map((item) => {
+        if (item.gameName === action.payload.game) {
+          let arr = [{ optionName: action.payload.optionName }];
+          if (item.gameOptions) {
+            arr = [
+              ...item.gameOptions,
+              { optionName: action.payload.optionName },
+            ];
+          }
+          return {
+            ...item,
+            gameOptions: arr,
+          };
+        } else {
+          return item;
+        }
+      });
+    },
+    extraOptionRemoved: (
+      state,
+      action: PayloadAction<{ game: string; optionName: string }>
+    ) => {
+      state.gameDetails = state.gameDetails.map((item1) => {
+        if (item1.gameName === action.payload.game) {
+          let removed = item1.gameOptions?.filter(
+            (item) => item.optionName != action.payload.optionName
+          );
+          return {
+            ...item1,
+            gameOptions: removed,
+          };
+        } else {
+          return item1;
+        }
+      });
+    },
+    option2Changed: (
+      state,
+      action: PayloadAction<{ game: string; items: op2[] }>
+    ) => {
+      state.gameDetails = state.gameDetails.map((item) => {
+        if (item.gameName === action.payload.game) {
+          let arr = action.payload.items;
+          return {
+            ...item,
+            gameOptions2: arr,
+          };
+        } else {
+          return item;
+        }
+      });
+    },
+    rankChanged: (
+      state,
+      action: PayloadAction<{ game: string; ranks: rnk }>
+    ) => {
+      gameDetailsSlice.caseReducers.gameDefiendCheck(state, {
+        payload: action.payload.game,
+        type: action.type,
+      });
+      state.gameDetails = state.gameDetails.map((item) =>
+        item.gameName === action.payload.game
+          ? {
+              ...item,
+              gameRanks: action.payload.ranks,
+            }
+          : item
+      );
+    },
+    rankWinsChanged: (
+      state,
+      action: PayloadAction<{ game: string; rankNwin: rnkw }>
+    ) => {
+      gameDetailsSlice.caseReducers.gameDefiendCheck(state, {
+        payload: action.payload.game,
+        type: action.type,
+      });
+      state.gameDetails = state.gameDetails.map((item) =>
+        item.gameName === action.payload.game
+          ? {
+              ...item,
+              gameRankWins: action.payload.rankNwin,
+            }
+          : item
+      );
+    },
+    unrankWinsChanged: (
+      state,
+      action: PayloadAction<{ game: string; win: number }>
+    ) => {
+      gameDetailsSlice.caseReducers.gameDefiendCheck(state, {
+        payload: action.payload.game,
+        type: action.type,
+      });
+      state.gameDetails = state.gameDetails.map((item) =>
+        item.gameName === action.payload.game
+          ? {
+              ...item,
+              gameUnrankedWins: action.payload.win,
+            }
+          : item
+      );
+    },
+  },
+});
+
+export const {
+  extraOptionAdded,
+  extraOptionRemoved,
+  option2Changed,
+  rankChanged,
+  gameDefiendCheck,
+  rankWinsChanged,
+  unrankWinsChanged,
+} = gameDetailsSlice.actions;
+
+export default gameDetailsSlice.reducer;

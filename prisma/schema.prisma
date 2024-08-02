@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model games {
+  id           String @id @default(uuid())
+  name         String @unique
+  homeImgSrc   String
+  homeImgSize  Json
+  homeImgStyle Json
+  order        orders? @relation(fields: [orderId], references: [id])
+  orderId      String? @unique
+}
+
+model orders {
+  id       String           @id @default(uuid())
+  game     games?
+  boosting boostingOrders[]
+  bgSrc    String
+}
+
+model boostingOrders {
+  id            String  @id @default(uuid())
+  orderedIn     orders? @relation(fields: [orderedInId], references: [id])
+  orderedInId   String?
+  img           String
+  name          String
+  details       String
+  pageImg       String
+  Data          Json
+  extraOptions  Json
+  extraOptions2 Json
+}

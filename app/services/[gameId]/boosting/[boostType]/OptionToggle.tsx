@@ -9,14 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { ToolTipEO } from "@/app/components/CostumToolTip";
 import { useEffect } from "react";
+import { extraOptionsType } from "@/app/components/types/Types";
 type mainProps = {
   game: string;
-  data: {
-    id: string;
-    name: string;
-    value: string;
-    tooltip: string;
-  }[];
+  data: extraOptionsType;
 };
 
 export const OptionToggle = ({ game, data }: mainProps) => {

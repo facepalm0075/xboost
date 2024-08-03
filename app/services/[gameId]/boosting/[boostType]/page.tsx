@@ -14,6 +14,11 @@ import selectRankData from "@/public/orders_data.json";
 import DesiredWinsUnranked from "./DesiredWinsUnranked";
 import OptionDropdown from "./OptionDropdown";
 import prisma from "@/src/lib/db";
+import {
+  boostingOrderJson,
+  extraOptionsType,
+  options2Type,
+} from "@/app/components/types/Types";
 
 const data = selectRankData.games[0].orders.boosting[0].content.data;
 const data2 = [
@@ -52,27 +57,69 @@ async function page({ params }: props) {
   //   },
   // });
   // console.log(games);
-  
+
+  const dbitems = await prisma.boostingOrders.findFirst({
+    where: {
+      orderedIn: {
+        game: {
+          name: params.gameId,
+        },
+      },
+      name: params.boostType,
+    },
+  });
+  let result = [dbitems];
+  let res = (result = result.filter((item3) => item3 != null));
+  if (res.length === 0) {
+    return (
+      <>
+        <div>bakhtim</div>
+      </>
+    );
+  }
+  const mainRes = res[0];
+  const mainResData = res[0].Data as boostingOrderJson;
+  const mainResEP = res[0].extraOptions as extraOptionsType;
+  const mainResO2 = res[0].extraOptions2 as options2Type;
   return (
     <>
       <StoreProvider>
         <div className="gameType-main flex">
           <div className="mt-7 mr-3 pr-4 w-3/4">
-            <DesiredRank gameN="Apex" data={data["main-data"]} />
-            <div className="gameTypeSpace"></div>
-            <DesiredWins gameN="Apex" data={data["main-data"]} />
-            <div className="gameTypeSpace"></div>
-            <DesiredWinsUnranked gameN="Apex" />
-            <div className="gameTypeSpace"></div>
+            {mainRes.name === "rank-boost" ? (
+              <>
+                <DesiredRank gameN="Apex" data={mainResData.ranksData} />
+                <div className="gameTypeSpace"></div>
+              </>
+            ) : (
+              ""
+            )}
+            {mainRes.name === "rank-wins" ? (
+              <>
+                <DesiredWins gameN="Apex" data={mainResData.ranksData} />
+                <div className="gameTypeSpace"></div>
+              </>
+            ) : (
+              ""
+            )}
+            {mainRes.name === "unrank-wins" ? (
+              <>
+                <DesiredWinsUnranked gameN="Apex" />
+                <div className="gameTypeSpace"></div>
+              </>
+            ) : (
+              ""
+            )}
+
             <div className="gameType-cont">
               <h2>Extra Options</h2>
               <div className="">
                 <div className="">
-                  <OptionToggle game="Apex" data={data["extra-options"]} />
+                  <OptionToggle game="Apex" data={mainResEP} />
                 </div>
                 <div className="mt-4">
                   <div className="gameType-base eomain">
-                    <OptionDropdown gameN="Apex" />
+                    <OptionDropdown gameN="Apex" data={mainResO2} />
                   </div>
                 </div>
               </div>

@@ -8,30 +8,14 @@ import {
   op2,
   option2Changed,
 } from "@/app/redux/Features/extraOptions/gameDetailsSlice";
+import { options2Type } from "@/app/components/types/Types";
 
-const data = [
-  {
-    title: "Server",
-    items: ["africa", "europe", "usa", "me"],
-  },
-  {
-    title: "RR Gain",
-    items: ["10+ RR", "20+ RR", "30+ RR", "45+ RR"],
-  },
-  {
-    title: "RR Amount",
-    items: ["0-20 RR", "21-40 RR", "41-60 RR", "61-80 RR", "81-99 RR"],
-  },
-  {
-    title: "Platform",
-    items: ["PC", "XBOX", "Play Station"],
-  },
-];
 type mainProps = {
   gameN: string;
+  data:options2Type
 };
 
-function OptionDropdown({ gameN }: mainProps) {
+function OptionDropdown({ gameN,data }: mainProps) {
   const mainNameer = useAppSelector((state) => state.gameDetails);
   const nameer = mainNameer.gameDetails;  
   const dispatch = useAppDispatch();   

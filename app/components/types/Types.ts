@@ -17,3 +17,22 @@ export type md = {
   rankColor: string;
   rankNums: mdn[];
 };
+
+export type boostingOrderJson = {
+  maxWins: number;
+  ranksData: md[];
+};
+
+
+
+export type extraOptionsType = {
+  id: string;
+  name: string;
+  value: string;
+  tooltip: string;
+}[];
+
+export type options2Type = {
+  title: string;
+  items: string[];
+}[];

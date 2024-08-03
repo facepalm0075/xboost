@@ -10,7 +10,10 @@ type props = {
 };
 
 export default async function Layout({ children, params }: props) {
-  const dbitems = await prisma.boostingOrders.findMany({    
+  const dbitems = await prisma.boostingOrders.findMany({
+    select:{
+      name:true
+    },
     where: {
       orderedIn: {
         game: {
@@ -18,7 +21,7 @@ export default async function Layout({ children, params }: props) {
         },
       },
     },
-  });
+  });  
   const gameId = titleCase(params.gameId);
   const boostType = titleCase(params.boostType);
   return (
@@ -52,12 +55,11 @@ export default async function Layout({ children, params }: props) {
           {dbitems.map((item, key) => {
             return (
               <Link key={key} href={`${item.name}`}>
-              <div
-                
-                className={`gameType-btn ${params.boostType === item.name ? "gameType-btn-active" : ""}`}
-              >
-                {titleCase(item.name)}
-              </div>
+                <div
+                  className={`gameType-btn ${params.boostType === item.name ? "gameType-btn-active" : ""}`}
+                >
+                  {titleCase(item.name)}
+                </div>
               </Link>
             );
           })}

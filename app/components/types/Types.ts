@@ -34,5 +34,5 @@ export type extraOptionsType = {
 
 export type options2Type = {
   title: string;
-  items: string[];
+  items: { value: string, content: string }[];
 }[];

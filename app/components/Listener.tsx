@@ -11,13 +11,12 @@ export default function Listener() {
           ref.current?.getBoundingClientRect().top! +
           document.documentElement.scrollTop;
         window.scrollTo({
-          top: top - 200,
+          top: top - 300,
           left: 0,
           behavior: "smooth",
         });
       }, 100);
     }
-    window.scrollTo(0, 0);
   }, [router]);
   return <div ref={ref}></div>;
 }

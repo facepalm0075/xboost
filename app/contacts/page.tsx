@@ -10,7 +10,9 @@ import Listener from "../components/Listener";
 function page() {
   return (
     <>
-      <div className="elipse1"></div>
+      <div>
+        <div className="elipse1"></div>
+      </div>
       <div className="contact-base contacts-banner">
         <Image
           src="/contact-abstract.png"
@@ -35,7 +37,9 @@ function page() {
         </p>
         <div className="contact-btn">Start Chat</div>
       </div>
-      <div className="elipse2"></div>
+      <div>
+        <div className="elipse2"></div>
+      </div>
       <div className="contact-base flex contacts-info">
         <div className="info-item">
           <Link href="">
@@ -176,7 +180,7 @@ function page() {
               />
               <span>I agree with Terms of Use and Privacy Policy</span>
             </div>
-            
+
             <button type="submit">Send Your Message</button>
             <div className="clear-both"></div>
           </form>

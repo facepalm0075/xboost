@@ -249,34 +249,67 @@
                 ],
                 "extra-options": [
                   {
-                    "id": "playOffline",
-                    "name": "Play Offline",
+                    "name": "play-offline",
                     "value": "FREE",
                     "tooltip": "the booster appears offline during the order proggretion to ensure extra safty"
                   },
                   {
-                    "id": "operatorPerfrence",
-                    "name": "Operator Perfrence",
+                    "name": "operator-perfrence",
                     "value": "10%",
                     "tooltip": "the booster appears offline during the order proggretion to ensure extra safty"
                   },
                   {
-                    "id": "Streaming",
-                    "name": "Streaming",
+                    "name": "streaming",
                     "value": "30%",
                     "tooltip": "the booster appears offline during the order proggretion to ensure extra safty"
                   },
                   {
-                    "id": "playWithBooster",
-                    "name": "Play With Booster",
+                    "name": "play-with-booster",
                     "value": "40%",
                     "tooltip": "the booster appears offline during the order proggretion to ensure extra safty"
                   },
                   {
-                    "id": "expressDelivery",
-                    "name": "Express Delivery",
+                    "name": "express-delivery",
                     "value": "50%",
                     "tooltip": "the booster appears offline during the order proggretion to ensure extra safty"
+                  }
+                ],
+                "op2": [
+                  {
+                    "items": [
+                      { "value": "FREE", "content": "africa" },
+                      { "value": "FREE", "content": "europe" },
+                      { "value": "FREE", "content": "usa" },
+                      { "value": "FREE", "content": "me" }
+                    ],
+                    "title": "Server"
+                  },
+                  {
+                    "items": [
+                      { "value": "FREE", "content": "10+ RR" },
+                      { "value": "FREE", "content": "20+ RR" },
+                      { "value": "FREE", "content": "30+ RR" },
+                      { "value": "FREE", "content": "45+ RR" }
+                    ],
+                    "title": "RR Gain"
+                  },
+                  {
+                    "items": [
+                      { "value": "FREE", "content": "0-20 RR" },
+                      { "value": "FREE", "content": "21-40 RR" },
+                      { "value": "FREE", "content": "41-60 RR" },
+                      { "value": "FREE", "content": "61-80 RR" },
+                      { "value": "FREE", "content": "81-99 RR" }
+                    ],
+                    "title": "RR Amount"
+                  },
+                  {
+                    "items": [
+                      { "value": "FREE", "content": "PC" },
+                      { "value": "FREE", "content": "XBOX" },
+                      { "value": "FREE", "content": "Play Station" }
+                    ],
+                    "title": "Platform"
                   }
                 ]
               }

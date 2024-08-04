@@ -6,19 +6,21 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type op = {
   optionName: string;
+  value: string;
 };
 
 export type op2 = {
   optionName: string;
+  optionContent: string;
   optionValue: string;
 };
 
-type rnk = {
+export type rnk = {
   currentRank: rnkDet | undefined;
   desiredRank: rnkDet | undefined;
 };
 
-type rnkw = {
+export type rnkw = {
   currentRank: rnkDet | undefined;
   wins: number | undefined;
 };
@@ -65,7 +67,7 @@ export const gameDetailsSlice = createSlice({
     },
     extraOptionAdded: (
       state,
-      action: PayloadAction<{ game: string; optionName: string }>
+      action: PayloadAction<{ game: string; option: op }>
     ) => {
       gameDetailsSlice.caseReducers.gameDefiendCheck(state, {
         payload: action.payload.game,
@@ -73,12 +75,9 @@ export const gameDetailsSlice = createSlice({
       });
       state.gameDetails = state.gameDetails.map((item) => {
         if (item.gameName === action.payload.game) {
-          let arr = [{ optionName: action.payload.optionName }];
+          let arr = [action.payload.option];
           if (item.gameOptions) {
-            arr = [
-              ...item.gameOptions,
-              { optionName: action.payload.optionName },
-            ];
+            arr = [...item.gameOptions, action.payload.option];
           }
           return {
             ...item,
@@ -109,7 +108,14 @@ export const gameDetailsSlice = createSlice({
     },
     option2Changed: (
       state,
-      action: PayloadAction<{ game: string; items: op2[] }>
+      action: PayloadAction<{
+        game: string;
+        items: {
+          optionName: string;
+          optionContent: string;
+          optionValue: string;
+        }[];
+      }>
     ) => {
       state.gameDetails = state.gameDetails.map((item) => {
         if (item.gameName === action.payload.game) {

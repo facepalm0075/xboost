@@ -26,7 +26,7 @@ export default async function Layout({ children, params }: props) {
   const boostType = titleCase(params.boostType);
   return (
     <>
-      <div className="gameType-container">
+      <div id="gtcont" className="gameType-container">
         <div className="relative">
           <Image
             src="/cs2-bg-img5.png"

@@ -10,6 +10,7 @@ import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { ToolTipEO } from "@/app/components/CostumToolTip";
 import { useEffect } from "react";
 import { extraOptionsType } from "@/app/components/types/Types";
+import { titleCase } from "@/app/components/TitleCase";
 type mainProps = {
   game: string;
   data: extraOptionsType;
@@ -27,7 +28,6 @@ export const OptionToggle = ({ game, data }: mainProps) => {
           return (
             <OptionToggleItem
               key={key}
-              id={item.id}
               name={item.name}
               value={item.value}
               tooltip={item.tooltip}
@@ -41,20 +41,19 @@ export const OptionToggle = ({ game, data }: mainProps) => {
 };
 
 type props = {
-  id: string;
   name: string;
   value: string;
   tooltip: string;
   gameN: string;
 };
-const OptionToggleItem = ({ id, name, value, tooltip, gameN }: props) => {
+const OptionToggleItem = ({  name, value, tooltip, gameN }: props) => {
   const nameer = useAppSelector((state) => state.gameDetails.gameDetails);
   const dispatch = useAppDispatch();
   let isIn = false;
   nameer.map((item, key) => {
     if (item.gameName === gameN) {
       item.gameOptions?.map((item) => {
-        if (item.optionName === id) {
+        if (item.optionName === name) {
           isIn = true;
         }
       });
@@ -62,10 +61,10 @@ const OptionToggleItem = ({ id, name, value, tooltip, gameN }: props) => {
     return "";
   });
   const add = () => {
-    dispatch(extraOptionAdded({ game: gameN, optionName: id }));
+    dispatch(extraOptionAdded({ game: gameN, option:{optionName:name , value:value} }));
   };
   const remove = () => {
-    dispatch(extraOptionRemoved({ game: gameN, optionName: id }));
+    dispatch(extraOptionRemoved({ game: gameN, optionName: name }));
   };
   return (
     <div
@@ -79,7 +78,7 @@ const OptionToggleItem = ({ id, name, value, tooltip, gameN }: props) => {
       className="eoItem"
     >
       <span className="text-white text-base block">
-        {name}
+        {titleCase(name)}
         <ToolTipEO title={tooltip}>
           <FontAwesomeIcon icon={faQuestionCircle} />
         </ToolTipEO>

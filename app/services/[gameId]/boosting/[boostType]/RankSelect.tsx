@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ToolTipEO } from "@/app/components/CostumToolTip";
-import { useAppSelector } from "@/app/redux/hooks";
 import { rnkDet, md, mdn } from "@/app/components/types/Types";
 import { ExtraOptionsState } from "@/app/redux/Features/extraOptions/gameDetailsSlice";
 
@@ -12,9 +11,9 @@ type props = {
   currentChanged: (item: rnkDet) => void;
   desiredChanged?: (item: rnkDet) => void;
   disables?: number;
-  lastRank:boolean
+  lastRank: boolean;
   usage?: "single";
-  mainNameer:ExtraOptionsState
+  mainNameer: ExtraOptionsState;
 };
 export default function RankSelect({
   name,
@@ -26,7 +25,7 @@ export default function RankSelect({
   disables,
   usage,
   mainNameer,
-  lastRank
+  lastRank,
 }: props) {
   const nameer = mainNameer.gameDetails;
   const maxCurrent = data.length;
@@ -81,40 +80,43 @@ export default function RankSelect({
     if (type === "current") {
       if (item[0].mmr !== undefined) {
         const mm = item[0]!.mmr!;
-        currentChanged({
-          rankNumber: mm,
-          rankImage: rankImage,
-          rankName: rankMain,
-          rankStar: rankStar,
-        });
+        currentChanged(getUpdated(mm));
       }
     } else if (type === "desired") {
       if (item[0].mmr !== undefined) {
         const mm = item[0]!.mmr!;
-        desiredChanged!({
-          rankNumber: mm,
-          rankImage: rankImage,
-          rankName: rankMain,
-          rankStar: rankStar,
-        });
+        desiredChanged!(getUpdated(mm));
       }
     }
   };
+  const getUpdated = (cRank: number) => {
+    let rankName2 = "";
+    let rankImage2 = "";
+    let rankStar2 = "";
+    data.map((item) => {
+      item.rankNums.map((item2) => {
+        if (item2.mmr !== undefined) {
+          if (item2.mmr <= cRank) {
+            rankStar2 = item2.content;
+            rankName2 = item.rankName;
+            rankImage2 = item2.img;
+          }
+        }
+      });
+    });
+    const result = {
+      rankNumber: cRank,
+      rankImage: rankImage2,
+      rankName: rankName2,
+      rankStar: rankStar2,
+    };
+    return result;
+  };
   const starClickHandler = (item: number) => {
     if (type === "current") {
-      currentChanged({
-        rankNumber: item,
-        rankImage: rankImage,
-        rankName: rankMain,
-        rankStar: rankStar,
-      });
+      currentChanged(getUpdated(item));
     } else if (type === "desired") {
-      desiredChanged!({
-        rankNumber: item,
-        rankImage: rankImage,
-        rankName: rankMain,
-        rankStar: rankStar,
-      });
+      desiredChanged!(getUpdated(item));
     }
   };
   return (

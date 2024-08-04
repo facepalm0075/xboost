@@ -23,19 +23,19 @@ export default function RootLayout({
         style={{ fontWeight: "400", fontSize: "15px" }}
         className={lexend.className}
       >
-        
-          <Navbar />
-          <NextTopLoader speed={1500} showSpinner={false} />
-          {children}
-          <ScrollFix />
-          <Footer />
+        <Navbar />
+        <NextTopLoader speed={1500} showSpinner={false} />
+        {children}
+        <ScrollFix />
+        <Footer />
       </body>
       <Script strategy="lazyOnload" id="link-disable">
         {`
           window.onscroll = function() {pgScroll()};
           var header = document.getElementById("MHeader");
           var fixer = document.getElementById("h-height-fix");
-          var sticky = header.offsetTop+170;          
+          var sticky = header.offsetTop+170;
+          pgScroll()          
           function pgScroll() {
             var header2 = document.getElementById("game-nav");
             var fixer2 = document.getElementById("game-nav-fixer");
@@ -56,59 +56,7 @@ export default function RootLayout({
             }
           }        
 
-
-
-          document.getElementById("link0").addEventListener("click", disabler1);
-          document.getElementById("link1").addEventListener("click", disabler2);
-          document.getElementById("link2").addEventListener("click", disabler3);
-          document.getElementById("link3").addEventListener("click", disabler4);
-          document.getElementById("link4").addEventListener("click", disabler5);
-          const link0 = document.getElementById("link0");
-          const link1 = document.getElementById("link1");
-          const link2 = document.getElementById("link2");
-          const link3 = document.getElementById("link3");
-          const link4 = document.getElementById("link4");
-          var path = window.location.pathname;
-          var page = path.split("/").pop();
-          if(page == ""){
-            link0.classList.add("nav-active")
-          }else if(page == "contacts"){
-            const queryString = window.location.search;
-            if(queryString == "?s=workWithUs"){
-              link2.classList.add("nav-active")
-            }else{
-              link3.classList.add("nav-active")
-            }            
-          }else if(page == "blog"){
-            link4.classList.add("nav-active")
-          }            
-          function disabler1(){
-            disable()
-            link0.classList.add("nav-active")
-          }
-          function disabler2(){
-            disable()
-            link1.classList.add("nav-active")
-          } 
-          function disabler3(){
-            disable()
-            link2.classList.add("nav-active")
-          } 
-          function disabler4(){
-            disable()
-            link3.classList.add("nav-active")
-          } 
-          function disabler5(){
-            disable()
-            link4.classList.add("nav-active")
-          }
-          function disable(){
-            link0.classList.remove("nav-active")
-            link1.classList.remove("nav-active")
-            link2.classList.remove("nav-active")
-            link3.classList.remove("nav-active")
-            link4.classList.remove("nav-active")
-          }         
+      
       `}
       </Script>
     </html>

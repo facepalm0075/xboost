@@ -12,69 +12,66 @@ import { options2Type } from "@/app/components/types/Types";
 
 type mainProps = {
   gameN: string;
-  data:options2Type
+  data: options2Type;
 };
 
-function OptionDropdown({ gameN,data }: mainProps) {
+function OptionDropdown({ gameN, data }: mainProps) {
   const mainNameer = useAppSelector((state) => state.gameDetails);
-  const nameer = mainNameer.gameDetails;  
-  const dispatch = useAppDispatch();   
+  const nameer = mainNameer.gameDetails;
+  const dispatch = useAppDispatch();
   const initValue = data.map((item) => {
     return {
       optionName: item.title,
-      optionValue: item.items[0],
+      optionContent: item.items[0].content,
+      optionValue: item.items[0].value,
     };
-  })
-  console.log(nameer)
-  useEffect(() => {    
+  });
+  console.log(nameer);
+  useEffect(() => {
     nameer.map((item) => {
       if (item.gameName === gameN) {
         if (item.gameOptions2!.length === 0) {
-          dispatch(option2Changed({ game: gameN, items: initValue }));          
+          dispatch(option2Changed({ game: gameN, items: initValue }));
         }
       }
     });
   });
   const handleItem = (item: string[]) => {
-    const [value,title]=item
-    const result ={
+    const [content, title, value] = item;
+    const result = {
       optionName: title,
+      optionContent:content,
       optionValue: value,
-    }
-    let mainResult:op2[]=[]
-    let final:(op2 | undefined)[]=[]
-    nameer.map((item)=>{
+    };
+    let mainResult: op2[] = [];
+    let final: (op2 | undefined)[] = [];
+    nameer.map((item) => {
       if (item.gameName === gameN) {
-         final = item.gameOptions2!.map((item2)=>{
-          if(item2?.optionName !== result.optionName){            
-            return item2
+        final = item.gameOptions2!.map((item2) => {
+          if (item2?.optionName !== result.optionName) {
+            return item2;
           }
-        })         
-        
+        });
       }
-    })
-    let removed = final.filter(
-      (item3) => item3 != undefined
-    );
-    mainResult = [...removed,result]
+    });
+    let removed = final.filter((item3) => item3 != undefined);
+    mainResult = [...removed, result];
     dispatch(option2Changed({ game: gameN, items: mainResult }));
   };
-  
-  
-  const getVal=(title:string)=>{
-    let value:any
-    nameer.map((item)=>{
+
+  const getVal = (title: string) => {
+    let value: any;
+    nameer.map((item) => {
       if (item.gameName === gameN) {
-        item.gameOptions2!.map((item2)=>{
-          if(item2?.optionName === title){
-            value= item2?.optionValue
+        item.gameOptions2!.map((item2) => {
+          if (item2?.optionName === title) {
+            value = item2?.optionContent;
           }
-        })   
-        
+        });
       }
-    })
-    return value
-  }
+    });
+    return value;
+  };
   return (
     <>
       <div className="flex py-3 pb-1">
@@ -98,9 +95,9 @@ function OptionDropdown({ gameN,data }: mainProps) {
 
 type props = {
   value: string;
-  items: string[];
+  items: { value: string; content: string }[];
   getItem: (item: string[]) => void;
-  title:string
+  title: string;
 };
 
 export function DropDownSlider({ items, value, getItem, title }: props) {
@@ -132,14 +129,14 @@ export function DropDownSlider({ items, value, getItem, title }: props) {
         </div>
         <div ref={ref} className="drop-down-items">
           {items.map((item, key) => {
-            return item !== value ? (
+            return item.content !== value ? (
               <div
                 key={key}
                 onClick={(e) => {
-                  getItem([e.currentTarget.textContent!,title]);
+                  getItem([e.currentTarget.textContent!, title, item.value]);
                 }}
               >
-                {item}
+                {item.content}
               </div>
             ) : (
               ""

@@ -101,7 +101,7 @@ function DesiredWins({ gameN, data }: mainProps) {
           desiredChanged={() => {}}
           usage="single"
           mainNameer={mainNameer}
-          lastRank={true}        
+          lastRank={true}
         />
       </div>
       <div className="selectRank-arrow">

@@ -1,0 +1,141 @@
+.elipse1-b {
+  position: absolute;
+  right: -200px;
+  top: 0px;
+  width: 600px;
+  height: 600px;
+  background-color: #f622ea;
+  border-radius: 200px;
+  filter: blur(200px);
+  z-index: -2;
+  animation-name: fadeInC-b;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInC-b {
+  0% {
+  }
+  100% {
+    transform: translate(283px, 200px);
+  }
+}
+
+.elipse2-b {
+  position: absolute;
+  left: 0px;
+  width: 400px;
+  height: 400px;
+  background-color: var(--theme-main-color);
+  border-radius: 200px;
+  filter: blur(141px);
+  z-index: -2;
+  animation-name: fadeInCn-b;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInCn-b {
+  0% {
+  }
+  100% {
+    transform: translate(-367px, 50px);
+  }
+}
+
+.blog-hero {
+  width: 96%;
+  margin: auto;
+  max-width: 1400px;
+  margin-top: 50px;
+  position: relative;
+}
+
+.blog-hero img {
+  border-radius: 44px;
+  box-shadow: 0 0 20px 1px black;
+}
+
+.blog-hero-title {
+  border: 1px solid #8d8d8d;
+  background-color: #252525be;
+  border-radius: 14px;
+  padding: 10px 20px;
+  max-width: 500px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px 0 black;
+  backdrop-filter: blur(8px);
+}
+
+.blog-hero-title h1 {
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.blog-hero-title p {
+  margin-top: 10px;
+}
+
+.blog-carusel-container {
+  width: 96%;
+  max-width: 1600px;
+  margin: auto;
+}
+
+.blog-carusel-item {
+  border: 2px solid #1f1f1f;
+  background-color: #141414;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 5px -1px black;
+  margin: 5px 5px;
+  transition: all 0.3s;
+}
+
+.blog-carusel-item:hover{
+  transform: scale(1.02);
+  border: 2px solid #3b3b3b;
+  box-shadow: 0 0 8px -0px black;
+}
+
+.bci-author img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+}
+
+.bci-author h4 {
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.bci-author span {
+  font-size: 13px;
+}
+
+.bci-content h3 {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.bci-btn {
+  border: 1px solid var(--theme-main-color);
+  margin: 20px auto;
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+.bci-btn:hover {
+  background-color: var(--theme-main-color);
+  color: black;
+}

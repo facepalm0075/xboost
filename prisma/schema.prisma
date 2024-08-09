@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native","debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model games {
+  id           Int @id @default(autoincrement())
+  name         String @unique
+  homeImgSrc   String
+  homeImgSize  Json
+  homeImgStyle Json
+  order        orders? @relation(fields: [orderId], references: [id])
+  orderId      String? @unique
+}
+
+model orders {
+  id       String           @id @default(uuid())
+  game     games?
+  boosting boostingOrders[]
+  bgSrc    String
+}
+
+model boostingOrders {
+  id            Int  @id @default(autoincrement())
+  orderedIn     orders? @relation(fields: [orderedInId], references: [id])
+  orderedInId   String?
+  img           String
+  name          String
+  details       String
+  pageImg       String
+  Data          Json
+  extraOptions  Json
+  extraOptions2 Json
+}
